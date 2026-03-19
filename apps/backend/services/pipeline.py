@@ -5,7 +5,8 @@ This is the single entry point the router calls.
 
 
 from .process_video import process
-from .pose_analysis import  get_pose
+from .pose_analysis import get_pose
+from .analyse_mechanics import elbow_alignment
 
 def analyse_video(contents):
     # process video
@@ -13,11 +14,15 @@ def analyse_video(contents):
     # return filepath
 
     # get frame for specific pose e.g set  point
-    set_point_frame = get_pose(filepath)
-    return set_point_frame
+    set_point_frame, set_point_landmark = get_pose(filepath)
+    # check vertical elbow alignment at set point
+    result = elbow_alignment(set_point_landmark)
+    return result
 
 
-# analyse mechanics
+
+
+
 
 
 #  get coach feedback and return result

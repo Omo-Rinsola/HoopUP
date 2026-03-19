@@ -26,7 +26,10 @@ def calculate_angle(a, b, c):
         angle = 360 - angle
 
     return angle
+
+
 # ----------------------------
+
 
 
 def get_pose(filename):
@@ -71,6 +74,7 @@ def get_pose(filename):
                 if angle < 160 and angle < min_angle:
                     min_angle = angle
                     set_point_frame = frame.copy()
+                    set_point_landmark = (wrist_r, elbow_r)
 
                 # get base
             except AttributeError:
@@ -80,11 +84,13 @@ def get_pose(filename):
 
 
 
+
     cap.release()
 
     if set_point_frame is not None:
         print(f"Set point elbow angle: {min_angle:.2f} degrees")
-        return set_point_frame
+        cv2.imwrite("debug_setpoint.jpg", set_point_frame)
+        return set_point_frame, set_point_landmark
     else:
         print("No set point detected")
 
